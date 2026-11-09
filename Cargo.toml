@@ -1,0 +1,39 @@
+[package]
+name = "bevy_msdf_text"
+version = "0.1.0"
+edition = "2024"
+description = "Crisp MTSDF glyph-atlas text for Bevy: one atlas for every size, outlines and shadows in the shader, billboard / fixed-pixel / screen anchoring"
+license = "MIT OR Apache-2.0"
+keywords = ["bevy", "msdf", "text", "sdf", "font"]
+categories = ["game-development", "rendering"]
+
+[dependencies]
+# Only what the plugin itself touches; examples pull in the rest.
+bevy = { version = "0.19", default-features = false, features = ["bevy_pbr", "bevy_asset", "bevy_log"] }
+# Pure-Rust MSDF/MTSDF generator (MIT), wasm-friendly, no threads.
+fdsm = "0.8"
+fdsm-ttf-parser = "0.2"
+image = { version = "0.25", default-features = false }
+nalgebra = "0.34"
+serde = { version = "1", features = ["derive"] }
+
+[dev-dependencies]
+bevy = "0.19"
+
+[target.'cfg(target_arch = "wasm32")'.dev-dependencies]
+getrandom = { version = "0.3", features = ["wasm_js"] }
+
+[package.metadata.wasm-fast]
+example = "nametags"
+
+[profile.dev]
+opt-level = 1
+
+# Atlas generation is pure number crunching: keep it fast in debug builds too.
+[profile.dev.package."*"]
+opt-level = 3
+
+[lints.clippy]
+# Bevy systems and queries.
+type_complexity = "allow"
+too_many_arguments = "allow"
