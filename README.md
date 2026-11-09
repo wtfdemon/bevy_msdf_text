@@ -6,6 +6,10 @@ size. Outlines, glows and drop shadows are a few shader ops per pixel. Text can
 be a billboard in the world, a name tag with a fixed pixel size, a flat sign, or
 HUD text.
 
+![The nametags example: an outlined, glowing HUD title, a big sign in the world, a fixed-size and a distance-scaled name tag, and a label on a crate](docs/nametags.png)
+
+*The `nametags` example (`cargo run --example nametags`).*
+
 Bevy's built-in text rasterizes bitmap glyphs on the CPU, one atlas per font
 size, and has no stroke. Scaling it blurs it, and an outline means stacking
 copies. An SDF stores *distance to the outline* instead of coverage, so the
